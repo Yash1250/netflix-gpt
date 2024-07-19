@@ -1,11 +1,23 @@
 /** @format */
 
 import React from "react";
+import { useState, useRef, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import bgImage from "../images/bg.jpg";
 import Header from "./Header";
-import { useState, useRef, useEffect } from "react";
+
 import validateForm from "../utils/validateForm";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  updateProfile,
+} from "firebase/auth";
+import { auth } from "../utils/firebase";
+import { addUser } from "../utils/userSlice";
 const Login = () => {
+  const Navigate = useNavigate();
+  const dispatch = useDispatch();
   const [validateMsg, setValidateMsg] = useState(null);
   const [isSignInForm, setIsSignInForm] = useState(true);
   const [maxLoginAttempt, setMaxLoginAttempt] = useState(0);
@@ -22,7 +34,7 @@ const Login = () => {
   useEffect(() => {
     if (seconds <= 0) {
       setSeconds(0); // Ensure the timer stops at 0
-    }
+    } 
   }, [seconds]);*/
   const email = useRef();
   const password = useRef();
@@ -39,6 +51,65 @@ const Login = () => {
     //} else setValidateMsg(msg);
     setValidateMsg(msg);
     //setMaxLoginAttempt(maxLoginAttempt + 1);
+    if (msg) return;
+
+    if (!isSignInForm) {
+      //sign up form
+      createUserWithEmailAndPassword(
+        auth,
+        email.current.value,
+        password.current.value
+      )
+        .then((userCredential) => {
+          // Signed up
+          const user = userCredential.user;
+
+          updateProfile(user, {
+            displayName: fullName.current.value,
+            photoURL: "https://example.com/jane-q-user/profile.jpg",
+          })
+            .then(() => {
+              const { uid, email, displayName, photoURL } = auth.currentUser;
+              dispatch(
+                addUser({
+                  uid: uid,
+                  emial: email,
+                  displayName: displayName,
+                  photoURL: photoURL,
+                })
+              );
+            })
+            .catch((error) => {
+              setValidateMsg(error.message);
+            });
+
+          console.log(user);
+          Navigate("/browse");
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          setValidateMsg(errorCode + "-" + errorMessage);
+        });
+    } else {
+      //sign in form
+      signInWithEmailAndPassword(
+        auth,
+        email.current.value,
+        password.current.value
+      )
+        .then((userCredential) => {
+          // Signed in
+          const user = userCredential.user;
+          console.log(user);
+          Navigate("/browse");
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          setValidateMsg(errorCode + "-" + errorMessage);
+        });
+    }
   }
   return (
     <div className="flex flex-col justify-center items-center">
