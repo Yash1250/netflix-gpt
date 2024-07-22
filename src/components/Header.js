@@ -1,22 +1,45 @@
 /** @format */
 
-import React from "react";
+import React, { useEffect } from "react";
 import netflixLogo from "../images/logo.png";
 import { signOut } from "firebase/auth";
 import { auth } from "../utils/firebase";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import myStore from "../utils/myStore";
+import { onAuthStateChanged } from "firebase/auth";
+import { addUser, removeUser } from "../utils/userSlice";
+import { useDispatch } from "react-redux";
 
 const Header = () => {
   const Navigate = useNavigate();
+  const dispatch = useDispatch();
   const loggedInUser = useSelector((store) => store.user);
   console.log(loggedInUser);
+  useEffect(() => {
+    const clearAuthChanged = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        // User is signed in, see docs for a list of available properties
+        const { uid, email, displayName, photoURL } = user;
+        dispatch(
+          addUser({
+            uid: uid,
+            emial: email,
+            displayName: displayName,
+            photoURL: photoURL,
+          })
+        );
+        Navigate("/browse");
+      } else {
+        Navigate("/");
+        dispatch(removeUser());
+      }
+    });
+    //unmouting
+    return () => clearAuthChanged();
+  }, []);
   function signOutHandeler() {
     signOut(auth)
-      .then(() => {
-        Navigate("/");
-      })
+      .then(() => {})
       .catch((error) => {
         Navigate("/error");
       });
@@ -29,7 +52,7 @@ const Header = () => {
       {loggedInUser && (
         <>
           <div>
-            <h2>{loggedInUser?.fullName}</h2>
+            <h2>{loggedInUser?.displayName}</h2>
           </div>
           <div className="flex gap-2 w-44 h-12">
             <img
