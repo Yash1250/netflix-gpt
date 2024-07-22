@@ -1,8 +1,8 @@
 /** @format */
 
 import React from "react";
-import { useState, useRef, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useRef } from "react";
+
 import { useDispatch } from "react-redux";
 import bgImage from "../images/bg.jpg";
 import Header from "./Header";
@@ -16,26 +16,9 @@ import {
 import { auth } from "../utils/firebase";
 import { addUser } from "../utils/userSlice";
 const Login = () => {
-  const Navigate = useNavigate();
   const dispatch = useDispatch();
   const [validateMsg, setValidateMsg] = useState(null);
   const [isSignInForm, setIsSignInForm] = useState(true);
-  const [maxLoginAttempt, setMaxLoginAttempt] = useState(0);
-  const [seconds, setSeconds] = useState(30);
-  /*useEffect(() => {
-    // Set up the interval to decrement the timer every second
-    const interval = setInterval(() => {
-      setSeconds((prevSeconds) => prevSeconds - 1);
-    }, 1000);
-
-    // Clean up the interval when the component unmounts or the timer ends
-    return () => clearInterval(interval);
-  }, []);
-  useEffect(() => {
-    if (seconds <= 0) {
-      setSeconds(0); // Ensure the timer stops at 0
-    } 
-  }, [seconds]);*/
   const email = useRef();
   const password = useRef();
   const fullName = useRef();
@@ -82,9 +65,6 @@ const Login = () => {
             .catch((error) => {
               setValidateMsg(error.message);
             });
-
-          console.log(user);
-          Navigate("/browse");
         })
         .catch((error) => {
           const errorCode = error.code;
@@ -102,7 +82,6 @@ const Login = () => {
           // Signed in
           const user = userCredential.user;
           console.log(user);
-          Navigate("/browse");
         })
         .catch((error) => {
           const errorCode = error.code;
