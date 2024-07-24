@@ -11,3 +11,12 @@ export const options = {
 
 export const nowPlayingApi =
   "https://api.themoviedb.org/3/movie/now_playing?page=1";
+
+export const popularApi = "https://api.themoviedb.org/3/movie/popular?page=1";
+
+export const topRatedApi =
+  "https://api.themoviedb.org/3/movie/top_rated?page=1";
+
+export const upcomingApi = "https://api.themoviedb.org/3/movie/upcoming?page=1";
+
+export const POSTER_IMG_URL = "https://image.tmdb.org/t/p/w500/";

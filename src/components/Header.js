@@ -14,7 +14,7 @@ const Header = () => {
   const Navigate = useNavigate();
   const dispatch = useDispatch();
   const loggedInUser = useSelector((store) => store.user);
-  console.log(loggedInUser);
+  //console.log(loggedInUser);
   useEffect(() => {
     const clearAuthChanged = onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -45,7 +45,7 @@ const Header = () => {
       });
   }
   return (
-    <div className="flex flex-row justify-between text-white items-center p-4 absolute z-30">
+    <div className="flex flex-row justify-between text-white items-center p-4 absolute z-30 bg-gradient-to-b from-black">
       <div className="">
         <img className="w-[12%]" src={netflixLogo} alt="Logo" />
       </div>

@@ -5,7 +5,7 @@ import useMainMovie from "../hooks/useMainMovie";
 
 const MainVideo = ({ movieId }) => {
   const trailer = useMainMovie(movieId);
-  console.log(trailer);
+  //console.log(trailer);
   return (
     <div className="">
       <iframe
