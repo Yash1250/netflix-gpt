@@ -10,7 +10,7 @@ const MainContainer = () => {
   if (!movies) return;
   const randIndex = Math.floor(Math.random() * movies.length);
   const mainMovie = movies[randIndex];
-  console.log(mainMovie);
+  //console.log(mainMovie);
   return (
     <div className="relative">
       <MainTitle

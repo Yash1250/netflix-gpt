@@ -16,7 +16,7 @@ const useMainMovie = (movieId) => {
 
     if (trailers.length > 0) {
       setTrailer(
-        `https://www.youtube.com/embed/${trailers[0].key}?autoplay=1&mute=0&si=PWRt5E1A-nywPyYt`
+        `https://www.youtube.com/embed/${trailers[0].key}?si=PWRt5E1A-nywPyYt&autoplay=1&mute=1`
         //`https://www.youtube.com/embed/${trailers[0].key}?autoplay=1&mute=1&controls=0&modestbranding=1&rel=0&iv_load_policy=3&fs=0`
       );
     }
