@@ -14,3 +14,44 @@
     scrollbar-width: none; /* Firefox */
   }
 }
+
+@keyframes shine {
+  0% {
+    background-position: 0;
+  }
+  60% {
+    background-position: 180px;
+  }
+  100% {
+    background-position: 180px;
+  }
+}
+
+.btn-shine {
+  background: linear-gradient(to right, #4d4d4d 0%, white 10%, #4d4d4d 20%);
+  background-position: 0;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shine 3s infinite linear;
+  animation-fill-mode: forwards;
+  -webkit-text-size-adjust: none;
+}
+
+body {
+  @apply bg-black antialiased;
+  font-family: "Poppins", sans-serif;
+}
+
+.tooltip {
+  @apply w-[8.3rem] h-14;
+}
+
+.tooltiptext {
+  @apply hidden absolute z-10 w-32 bg-red-600 mt-2 text-white text-center rounded-md p-1;
+  visibility: hidden;
+}
+
+.tooltip:hover .tooltiptext {
+  @apply block;
+  visibility: visible;
+}

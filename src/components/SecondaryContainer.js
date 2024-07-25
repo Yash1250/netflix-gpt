@@ -9,7 +9,7 @@ const SecondaryContainer = () => {
   const popularMovies = useSelector((store) => store.movie.popularMovie);
   const topRatedMovies = useSelector((store) => store.movie.topRatedMovie);
   const upcomingMovies = useSelector((store) => store.movie.upcomingMovie);
-  console.log(nowPlayingMovies, popularMovies, topRatedMovies, upcomingMovies);
+  //console.log(nowPlayingMovies, popularMovies, topRatedMovies, upcomingMovies);
   return (
     <div className="bg-black">
       <div className="-mt-72 relative">

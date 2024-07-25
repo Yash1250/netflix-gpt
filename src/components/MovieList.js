@@ -4,7 +4,7 @@ import React from "react";
 import MoiveCard from "./MoiveCard";
 
 const MovieList = ({ category, movies }) => {
-  console.log(movies);
+  //console.log(movies);
   return (
     <div className="">
       <div className=" p-3 ">
