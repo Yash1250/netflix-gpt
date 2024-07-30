@@ -6,12 +6,7 @@ import { signOut } from "firebase/auth";
 import { auth } from "../utils/firebase";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { onAuthStateChanged } from "firebase/auth";
-import { addUser, removeUser } from "../utils/userSlice";
-import { useDispatch } from "react-redux";
-import { SiProbot } from "react-icons/si";
-import { RiRobot2Fill } from "react-icons/ri";
-import { toggleGptSearch } from "../utils/isGptSearchPageSlice";
+import myStore from "../utils/myStore";
 
 const Header = () => {
   const Navigate = useNavigate();
@@ -56,7 +51,7 @@ const Header = () => {
     }
   };
   return (
-    <div className="flex flex-row justify-between text-white items-center p-4 absolute z-30 bg-gradient-to-bl from-black to-transparent">
+    <div className="flex flex-row justify-between items-center p-4 shadow-[0px_0px_0px_1px_rgba(0,0,0,0.06),0px_1px_1px_-0.5px_rgba(0,0,0,0.06),0px_3px_3px_-1.5px_rgba(0,0,0,0.06),_0px_6px_6px_-3px_rgba(0,0,0,0.06),0px_12px_12px_-6px_rgba(0,0,0,0.06),0px_24px_24px_-12px_rgba(0,0,0,0.06)] absolute">
       <div className="">
         <img
           className="w-[12%] cursor-pointer"
@@ -68,28 +63,18 @@ const Header = () => {
       </div>
       {loggedInUser && (
         <>
-          <div className="flex items-center gap-4 w-[30%] h-14">
-            <div
-              className="tooltip cursor-pointer"
-              onClick={toggleGptHandeler}
-              id="gptSearch">
-              <RiRobot2Fill className="w-12 h-12 cursor-pointer mx-auto text-red-600 bg-white rounded-full p-1" />
-              <span className="tooltiptext">GPT Space</span>
-            </div>
-            {/* <h2 className="w-42">{loggedInUser?.displayName}</h2> */}
-            <div className="tooltip">
-              <div className="flex gap-4">
-                <img
-                  className="w-12 h-12"
-                  src="https://wallpapers.com/images/high/netflix-profile-pictures-1000-x-1000-qo9h82134t9nv0j0.webp"
-                  alt="userIcon"
-                />
-                <button onClick={signOutHandeler} className="font-bold">
-                  Sign Out
-                </button>
-              </div>
-              <span className="tooltiptext">{loggedInUser?.displayName}</span>
-            </div>
+          <div>
+            <h2>{loggedInUser?.fullName}</h2>
+          </div>
+          <div className="flex gap-2 w-44 h-12">
+            <img
+              className="w-12 h-12"
+              src="https://wallpapers.com/images/high/netflix-profile-pictures-1000-x-1000-qo9h82134t9nv0j0.webp"
+              alt="userIcon"
+            />
+            <button onClick={signOutHandeler} className="font-bold">
+              Sign Out
+            </button>
           </div>
         </>
       )}
